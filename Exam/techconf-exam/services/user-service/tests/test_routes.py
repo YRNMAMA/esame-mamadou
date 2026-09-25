@@ -17,6 +17,7 @@ def client():
 class TestRoutes:
     """Test Flask routes."""
 
+    @pytest.mark.req("REQ-USR-B02")
     def test_health_endpoint(self, client):
         response = client.get("/health")
         assert response.status_code == 200
@@ -24,6 +25,8 @@ class TestRoutes:
         assert data["status"] == "ok"
         assert data["service"] == "user-service"
 
+    @pytest.mark.req("REQ-USR-B01")
+    @pytest.mark.req("REQ-USR-B02")
     def test_create_user_success(self, client):
         payload = {
             "first_name": "John",
@@ -43,6 +46,8 @@ class TestRoutes:
         assert "created_at" in data
         assert "updated_at" in data
 
+    @pytest.mark.req("REQ-USR-B01")
+    @pytest.mark.req("REQ-USR-B02")
     def test_create_user_missing_required(self, client):
         payload = {"first_name": "John"}
         response = client.post("/api/v1/users", json=payload)
@@ -50,6 +55,8 @@ class TestRoutes:
         data = response.get_json()
         assert data["error"]["code"] == "VALIDATION_ERROR"
 
+    @pytest.mark.req("REQ-USR-B01")
+    @pytest.mark.req("REQ-USR-B02")
     def test_create_user_invalid_email(self, client):
         payload = {"first_name": "John", "last_name": "Doe", "email": "invalid"}
         response = client.post("/api/v1/users", json=payload)
@@ -57,6 +64,8 @@ class TestRoutes:
         data = response.get_json()
         assert data["error"]["code"] == "VALIDATION_ERROR"
 
+    @pytest.mark.req("REQ-USR-B01")
+    @pytest.mark.req("REQ-USR-B02")
     def test_create_user_duplicate_email(self, client):
         payload = {"first_name": "John", "last_name": "Doe", "email": "john@example.com"}
         client.post("/api/v1/users", json=payload)
@@ -65,6 +74,8 @@ class TestRoutes:
         data = response.get_json()
         assert data["error"]["code"] == "EMAIL_ALREADY_EXISTS"
 
+    @pytest.mark.req("REQ-USR-B01")
+    @pytest.mark.req("REQ-USR-B02")
     def test_create_user_case_insensitive_email(self, client):
         payload1 = {"first_name": "John", "last_name": "Doe", "email": "john@example.com"}
         payload2 = {"first_name": "Jane", "last_name": "Doe", "email": "JOHN@EXAMPLE.COM"}
@@ -72,6 +83,8 @@ class TestRoutes:
         response = client.post("/api/v1/users", json=payload2)
         assert response.status_code == 409
 
+    @pytest.mark.req("REQ-USR-B03")
+    @pytest.mark.req("REQ-USR-B02")
     def test_list_users(self, client):
         # Create a few users
         for i in range(3):
@@ -85,6 +98,8 @@ class TestRoutes:
         assert data["page"] == 1
         assert data["page_size"] == 2
 
+    @pytest.mark.req("REQ-USR-B03")
+    @pytest.mark.req("REQ-USR-B02")
     def test_list_users_role_filter(self, client):
         client.post("/api/v1/users", json={"first_name": "John", "last_name": "Doe", "email": "john@example.com", "role": "attendee"})
         client.post("/api/v1/users", json={"first_name": "Jane", "last_name": "Doe", "email": "jane@example.com", "role": "organizer"})
@@ -95,6 +110,8 @@ class TestRoutes:
         assert data["total"] == 1
         assert data["items"][0]["role"] == "organizer"
 
+    @pytest.mark.req("REQ-USR-B03")
+    @pytest.mark.req("REQ-USR-B02")
     def test_list_users_email_filter(self, client):
         client.post("/api/v1/users", json={"first_name": "John", "last_name": "Doe", "email": "john@example.com"})
 
@@ -104,6 +121,7 @@ class TestRoutes:
         assert data["total"] == 1
         assert data["items"][0]["email"] == "john@example.com"
 
+    @pytest.mark.req("REQ-USR-B02")
     def test_get_user_success(self, client):
         create_resp = client.post("/api/v1/users", json={"first_name": "John", "last_name": "Doe", "email": "john@example.com"})
         user_id = create_resp.get_json()["id"]
@@ -114,12 +132,14 @@ class TestRoutes:
         assert data["id"] == user_id
         assert data["email"] == "john@example.com"
 
+    @pytest.mark.req("REQ-USR-B02")
     def test_get_user_not_found(self, client):
         response = client.get("/api/v1/users/00000000-0000-0000-0000-000000000000")
         assert response.status_code == 404
         data = response.get_json()
         assert data["error"]["code"] == "NOT_FOUND"
 
+    @pytest.mark.req("REQ-USR-B02")
     def test_put_user_success(self, client):
         create_resp = client.post("/api/v1/users", json={"first_name": "John", "last_name": "Doe", "email": "john@example.com"})
         user_id = create_resp.get_json()["id"]
@@ -132,11 +152,13 @@ class TestRoutes:
         assert data["email"] == "jane@example.com"
         assert data["role"] == "organizer"
 
+    @pytest.mark.req("REQ-USR-B02")
     def test_put_user_not_found(self, client):
         payload = {"first_name": "Jane", "last_name": "Smith", "email": "jane@example.com"}
         response = client.put("/api/v1/users/00000000-0000-0000-0000-000000000000", json=payload)
         assert response.status_code == 404
 
+    @pytest.mark.req("REQ-USR-B02")
     def test_put_user_missing_required(self, client):
         create_resp = client.post("/api/v1/users", json={"first_name": "John", "last_name": "Doe", "email": "john@example.com"})
         user_id = create_resp.get_json()["id"]
@@ -147,6 +169,7 @@ class TestRoutes:
         data = response.get_json()
         assert data["error"]["code"] == "VALIDATION_ERROR"
 
+    @pytest.mark.req("REQ-USR-B02")
     def test_patch_user_success(self, client):
         create_resp = client.post("/api/v1/users", json={"first_name": "John", "last_name": "Doe", "email": "john@example.com"})
         user_id = create_resp.get_json()["id"]
@@ -158,10 +181,12 @@ class TestRoutes:
         assert data["role"] == "organizer"
         assert data["last_name"] == "Doe"  # unchanged
 
+    @pytest.mark.req("REQ-USR-B02")
     def test_patch_user_not_found(self, client):
         response = client.patch("/api/v1/users/00000000-0000-0000-0000-000000000000", json={"first_name": "Jane"})
         assert response.status_code == 404
 
+    @pytest.mark.req("REQ-USR-B02")
     def test_patch_user_invalid_email(self, client):
         create_resp = client.post("/api/v1/users", json={"first_name": "John", "last_name": "Doe", "email": "john@example.com"})
         user_id = create_resp.get_json()["id"]
@@ -169,6 +194,8 @@ class TestRoutes:
         response = client.patch(f"/api/v1/users/{user_id}", json={"email": "invalid"})
         assert response.status_code == 422
 
+    @pytest.mark.req("REQ-USR-B01")
+    @pytest.mark.req("REQ-USR-B02")
     def test_patch_user_duplicate_email(self, client):
         client.post("/api/v1/users", json={"first_name": "John", "last_name": "Doe", "email": "john@example.com"})
         create_resp = client.post("/api/v1/users", json={"first_name": "Jane", "last_name": "Doe", "email": "jane@example.com"})
@@ -177,6 +204,8 @@ class TestRoutes:
         response = client.patch(f"/api/v1/users/{user_id}", json={"email": "john@example.com"})
         assert response.status_code == 409
 
+    @pytest.mark.req("REQ-USR-B01")
+    @pytest.mark.req("REQ-USR-B02")
     def test_delete_user_success(self, client):
         create_resp = client.post("/api/v1/users", json={"first_name": "John", "last_name": "Doe", "email": "john@example.com"})
         user_id = create_resp.get_json()["id"]
@@ -188,14 +217,20 @@ class TestRoutes:
         get_resp = client.get(f"/api/v1/users/{user_id}")
         assert get_resp.status_code == 404
 
+    @pytest.mark.req("REQ-USR-B01")
+    @pytest.mark.req("REQ-USR-B02")
     def test_delete_user_not_found(self, client):
         response = client.delete("/api/v1/users/00000000-0000-0000-0000-000000000000")
         assert response.status_code == 404
 
+    @pytest.mark.req("REQ-USR-B01")
+    @pytest.mark.req("REQ-USR-B02")
     def test_malformed_json(self, client):
         response = client.post("/api/v1/users", data="{invalid json", content_type="application/json")
         assert response.status_code == 400
 
+    @pytest.mark.req("REQ-USR-B01")
+    @pytest.mark.req("REQ-USR-B02")
     def test_method_not_allowed(self, client):
         response = client.post("/api/v1/users/123")  # POST on item endpoint
         assert response.status_code == 405
