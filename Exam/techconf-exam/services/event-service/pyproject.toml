@@ -1,0 +1,48 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "event-service"
+version = "0.1.0"
+description = "TechConf Event Service"
+requires-python = ">=3.12"
+dependencies = [
+    "flask>=3.0,<4",
+    "requests>=2.31,<3",
+    "techconf-common @ file:///Users/mamadougningue/EsameML/esame-mamadou/Exam/techconf-exam/services/common",
+    "user-service @ file:///Users/mamadougningue/EsameML/esame-mamadou/Exam/techconf-exam/services/user-service",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest>=7.4,<9",
+    "pytest-cov>=4.1,<5",
+    "responses>=0.23,<1",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["event_service*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --tb=short"
+
+[tool.coverage.run]
+source = ["event_service"]
+omit = [
+    "event_service/__main__.py",
+    "event_service/repository.py",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise AssertionError",
+    "raise NotImplementedError",
+]
