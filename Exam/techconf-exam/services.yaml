@@ -1,0 +1,36 @@
+# services.yaml — Manifest for TechConf acceptance suite
+# Declares the 3 mandatory services
+
+services:
+  # ------------------------------- mandatory -------------------------------
+  user:
+    cwd: services/user-service
+    command: /Library/Frameworks/Python.framework/Versions/3.13/bin/python3 -m user_service
+    health_path: /health
+
+  event:
+    cwd: services/event-service
+    command: /Library/Frameworks/Python.framework/Versions/3.13/bin/python3 -m event_service
+    health_path: /health
+
+  registration:
+    cwd: services/registration-service
+    command: /Library/Frameworks/Python.framework/Versions/3.13/bin/python3 -m registration_service
+    health_path: /health
+
+  # ------------------------------- optional --------------------------------
+  # Uncomment when implementing optional services
+  # feedback:
+  #   cwd: services/feedback-service
+  #   command: python -m app
+  #   health_path: /health
+
+  # notification:
+  #   cwd: services/notification-service
+  #   command: python -m app
+  #   health_path: /health
+
+  # notification:
+  #   cwd: services/notification-service
+  #   command: python -m app
+  #   health_path: /health

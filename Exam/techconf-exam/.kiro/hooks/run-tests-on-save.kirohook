@@ -1,0 +1,12 @@
+# Kiro Agent Hook — Run unit tests on Python file save
+
+trigger: file_save
+filter: "services/**/*.py"
+command: |
+  # Extract service name from file path
+  SERVICE=$(echo "$KIRO_FILE_PATH" | sed -E 's|.*services/([^/]+)/.*|\1|')
+  if [ -n "$SERVICE" ] && [ -d "services/$SERVICE/tests" ]; then
+    echo "Running unit tests for $SERVICE..."
+    cd "services/$SERVICE" && python -m pytest tests/ -v --tb=short 2>&1 | head -50
+  fi
+description: "Run unit tests for the modified service on file save"

@@ -1,66 +1,85 @@
-# techconf-exam — Template Repository
+# TechConf — Microservizi per la gestione delle iscrizioni a conferenze tech
 
-Template repository for the **TechConf** practical exam (Spec-Driven Development with Kiro).
+Progetto esame: implementazione spec-driven (Requirements-First) con Kiro IDE.
 
-Fork this repository and implement the microservices described in `Exam.MD` / the exam
-brief. This template ships the **non-modifiable** contracts and the acceptance test suite.
+## Servizi implementati
 
-## What this template provides
-
-| Path | Content | Modifiable? |
+| Servizio | Porta | Stato |
 |---|---|---|
-| `contracts/openapi/*.yaml` | OpenAPI 3.0 contracts for the 5 services — the source of truth | ❌ NO |
-| `contracts/validator.py` | `assert_matches_contract(service, method, path, response)` helper | ❌ NO |
-| `tests/integration/` | Acceptance test suite (client→service, service→service, e2e, resilience) | ❌ NO |
-| `CHECKSUMS.sha256` | Fingerprints of the non-modifiable files | ❌ NO |
-| `services.example.yaml` | Example manifest read by the suite to launch your services | ✅ copy to `services.yaml` |
+| user-service | 5001 | ✅ Obbligatorio |
+| event-service | 5002 | ✅ Obbligatorio |
+| registration-service | 5003 | ✅ Obbligatorio |
 
-Everything else (service code, unit tests, specs, steering) is designed by you.
+## Avvio dei servizi
 
-## Verifying the protected files
+```bash
+# Installa le dipendenze
+python3 -m pip install -e services/common
+python3 -m pip install -e services/user-service
+python3 -m pip install -e services/event-service
+python3 -m pip install -e services/registration-service
+
+# Avvia singolo servizio (esempio)
+cd services/user-service && PORT=5001 python3 -m user_service
+cd services/event-service && PORT=5002 USER_SERVICE_URL=http://localhost:5001 python3 -m event_service
+cd services/registration-service && PORT=5003 USER_SERVICE_URL=http://localhost:5001 EVENT_SERVICE_URL=http://localhost:5002 python3 -m registration_service
+```
+
+## Variabili d'ambiente
+
+| Variabile | Default | Descrizione |
+|---|---|---|
+| `PORT` | 5001/5002/5003 | Porta di ascolto del servizio |
+| `STORAGE_BACKEND` | `memory` | Backend di persistenza: `memory`, `json`, `sqlite` |
+| `DATA_DIR` | `./data` | Directory per i file json/sqlite |
+| `USER_SERVICE_URL` | `http://localhost:5001` | URL del user-service |
+| `EVENT_SERVICE_URL` | `http://localhost:5002` | URL dell'event-service |
+| `REGISTRATION_SERVICE_URL` | `http://localhost:5003` | URL del registration-service |
+
+## Esecuzione dei test
+
+```bash
+# Test unitari per servizio
+python3 -m pytest services/user-service/tests/ -v
+python3 -m pytest services/event-service/tests/ --ignore=services/event-service/tests/test_integration.py -v
+python3 -m pytest services/registration-service/tests/ --ignore=services/registration-service/tests/test_integration.py --ignore=services/registration-service/tests/test_integration_resilience.py -v
+
+# Test unitari con coverage
+python3 -m pytest services/user-service/tests/ --cov=user_service --cov-report=term
+python3 -m pytest services/event-service/tests/ --ignore=services/event-service/tests/test_integration.py --cov=event_service --cov-report=term
+python3 -m pytest services/registration-service/tests/ --ignore=services/registration-service/tests/test_integration.py --ignore=services/registration-service/tests/test_integration_resilience.py --cov=registration_service --cov-report=term
+
+# Integration test propri (avviano servizi reali)
+python3 -m pytest services/event-service/tests/test_integration.py -v
+python3 -m pytest services/registration-service/tests/test_integration.py -v
+python3 -m pytest services/registration-service/tests/test_integration_resilience.py -v
+
+# Suite di collaudo del docente
+pip install -r tests/integration/requirements.txt
+pytest tests/integration -m mandatory -v
+```
+
+## Verifica integrità file protetti
 
 ```bash
 sha256sum -c CHECKSUMS.sha256
 ```
 
-If you believe a contract is wrong, **open an issue** — do not modify it.
+## Struttura del progetto
 
-## Running the acceptance suite
-
-1. Copy the manifest and declare the services you implemented:
-
-   ```bash
-   cp services.example.yaml services.yaml
-   ```
-
-2. Install the suite dependencies:
-
-   ```bash
-   pip install -r tests/integration/requirements.txt
-   ```
-
-3. Run the suite:
-
-   ```bash
-   pytest tests/integration -v                 # all declared services
-   pytest tests/integration -m mandatory -v    # only the 3 mandatory services
-   pytest tests/integration -k registration -v # a single service
-   ```
-
-Services not declared in `services.yaml` are **skipped**, not failed.
-
-## The manifest (`services.yaml`)
-
-For each implemented service declare its working directory (`cwd`) and start `command`.
-The suite injects `PORT` and `*_SERVICE_URL` environment variables. Each service **must**
-listen on the port given by `PORT`.
-
-See `services.example.yaml` for the exact schema.
-
-## Ports
-
-- Development ports: `5001`–`5005`.
-- Acceptance ports: `15001`–`15005` (and `15101+` for resilience instances).
-- Your service must **always** read the port from the `PORT` environment variable.
-
-Logs of services launched by the suite are written to `.it-logs/<service>.log`.
+```
+techconf-exam/
+├── contracts/          # Contratti OpenAPI (NON MODIFICARE)
+├── tests/integration/  # Suite collaudo docente (NON MODIFICARE)
+├── services/
+│   ├── common/         # Libreria condivisa (techconf_common)
+│   ├── user-service/
+│   ├── event-service/
+│   └── registration-service/
+├── .kiro/
+│   ├── steering/       # Regole globali per Kiro
+│   ├── specs/          # Specifiche dei servizi
+│   └── hooks/          # Agent hooks
+├── services.yaml       # Manifest per la suite di collaudo
+└── BUGS.md             # Registro dei bug
+```
