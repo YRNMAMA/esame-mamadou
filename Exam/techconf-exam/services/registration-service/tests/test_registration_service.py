@@ -644,3 +644,102 @@ class TestSqliteRepositoryExtended:
         result = repo.list_registrations(page=2, page_size=2)
         assert len(result["items"]) == 2
         assert result["total"] == 4
+
+
+# A single, behavior-specific requirement marker is attached to every test below.
+# Keeping this registry centralized makes omissions and duplicate trace links easy
+# to validate without changing the test names used by the existing suite.
+_REQUIREMENT_TRACEABILITY = {
+    TestValidation: {
+        "test_valid_registration_create": "REQ-REG-B01",
+        "test_missing_user_id": "REQ-REG-B01",
+        "test_missing_event_id": "REQ-REG-B02",
+        "test_validate_registration_patch": "REQ-REG-B07",
+        "test_invalid_status": "REQ-REG-B07",
+        "test_validate_status_transition": "REQ-REG-B07",
+    },
+    TestMemoryRepository: {
+        "test_create_and_get": "REQ-REG-B06",
+        "test_get_by_user_and_event": "REQ-REG-B04",
+        "test_list_registrations_pagination": "REQ-REG-B05",
+        "test_list_registrations_filters": "REQ-REG-B07",
+        "test_update_status": "REQ-REG-B07",
+        "test_update_status_nonexistent": "REQ-REG-B07",
+        "test_delete": "REQ-REG-B05",
+        "test_count_confirmed_for_event": "REQ-REG-B05",
+    },
+    TestJsonRepository: {
+        "test_create_and_get": "REQ-REG-B06",
+        "test_persistence_across_instances": "REQ-REG-B06",
+    },
+    TestSqliteRepository: {
+        "test_create_and_get": "REQ-REG-B06",
+        "test_persistence_across_instances": "REQ-REG-B06",
+    },
+    TestBusinessLogic: {
+        "test_create_registration_success": "REQ-REG-B06",
+        "test_create_registration_user_not_found": "REQ-REG-B01",
+        "test_create_registration_event_not_found": "REQ-REG-B02",
+        "test_create_registration_event_not_published": "REQ-REG-B03",
+        "test_create_registration_already_registered": "REQ-REG-B04",
+        "test_create_registration_event_full": "REQ-REG-B05",
+        "test_create_registration_dependency_unavailable": "REQ-REG-B09",
+        "test_update_registration_status": "REQ-REG-B07",
+        "test_update_registration_invalid_transition": "REQ-REG-B07",
+        "test_update_registration_not_found": "REQ-REG-B07",
+        "test_get_stats": "REQ-REG-B08",
+        "test_get_stats_event_not_found": "REQ-REG-B08",
+        "test_list_registrations": "REQ-REG-B05",
+    },
+    TestConfig: {
+        "test_default_config": "REQ-REG-B09",
+        "test_custom_config": "REQ-REG-B09",
+        "test_invalid_storage_backend": "REQ-REG-B09",
+        "test_create_repository_factory": "REQ-REG-B05",
+    },
+    TestClients: {
+        "test_user_client_creation": "REQ-REG-B01",
+        "test_event_client_creation": "REQ-REG-B02",
+        "test_user_client_get_user_success": "REQ-REG-B01",
+        "test_user_client_get_user_not_found": "REQ-REG-B01",
+        "test_user_client_get_user_unavailable": "REQ-REG-B09",
+        "test_event_client_get_event_success": "REQ-REG-B02",
+        "test_event_client_get_event_not_found": "REQ-REG-B02",
+    },
+    TestContractValidation: {
+        "test_registration_schema": "REQ-REG-B06",
+        "test_registration_page_schema": "REQ-REG-B05",
+        "test_registration_stats_schema": "REQ-REG-B08",
+    },
+    TestJsonRepositoryExtended: {
+        "test_list_registrations_pagination": "REQ-REG-B05",
+        "test_list_registrations_user_filter": "REQ-REG-B04",
+        "test_list_registrations_event_filter": "REQ-REG-B05",
+        "test_list_registrations_status_filter": "REQ-REG-B07",
+        "test_update_status": "REQ-REG-B07",
+        "test_update_status_nonexistent": "REQ-REG-B07",
+        "test_delete": "REQ-REG-B05",
+        "test_count_confirmed_for_event": "REQ-REG-B05",
+        "test_get_by_user_and_event": "REQ-REG-B04",
+        "test_list_second_page": "REQ-REG-B05",
+    },
+    TestSqliteRepositoryExtended: {
+        "test_list_registrations_pagination": "REQ-REG-B05",
+        "test_list_registrations_user_filter": "REQ-REG-B04",
+        "test_list_registrations_event_filter": "REQ-REG-B05",
+        "test_list_registrations_status_filter": "REQ-REG-B07",
+        "test_update_status": "REQ-REG-B07",
+        "test_update_status_nonexistent": "REQ-REG-B07",
+        "test_delete": "REQ-REG-B05",
+        "test_count_confirmed_for_event": "REQ-REG-B05",
+        "test_get_by_user_and_event": "REQ-REG-B04",
+        "test_list_second_page": "REQ-REG-B05",
+    },
+}
+
+for _test_class, _test_requirements in _REQUIREMENT_TRACEABILITY.items():
+    for _test_name, _requirement_id in _test_requirements.items():
+        _test = getattr(_test_class, _test_name)
+        setattr(_test_class, _test_name, pytest.mark.req(_requirement_id)(_test))
+
+del _test_class, _test_requirements, _test_name, _requirement_id, _test

@@ -169,6 +169,7 @@ def create_published_event(user_url: str, event_url: str) -> dict:
 # Tests
 # ---------------------------------------------------------------------------
 
+@pytest.mark.req("REQ-REG-B06")
 def test_create_registration_success(user_service_url, event_service_url, registration_service_url):
     """Create a registration for a published event → 201, status=confirmed, amount=event.price."""
     event = create_published_event(user_service_url, event_service_url)
@@ -188,6 +189,7 @@ def test_create_registration_success(user_service_url, event_service_url, regist
     assert "Location" in resp.headers
 
 
+@pytest.mark.req("REQ-REG-B01")
 def test_create_registration_user_not_found(event_service_url, registration_service_url, user_service_url):
     """Non-existent user_id → 422 REFERENCE_NOT_FOUND."""
     event = create_published_event(user_service_url, event_service_url)

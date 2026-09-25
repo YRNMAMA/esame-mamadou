@@ -33,6 +33,7 @@ def wait_for_health(base_url: str, timeout: float = 10.0) -> bool:
     return False
 
 
+@pytest.mark.req("REQ-REG-B09")
 def test_create_registration_dependency_unavailable():
     """registration-service with USER_SERVICE_URL on a closed port → 503."""
     closed_port = find_free_port()
