@@ -1,0 +1,80 @@
+{
+  "pbtResults": {},
+  "executionHistory": {
+    "8.1 Add requirement traceability to every event-service unit and integration test using `@pytest.mark.req(\"REQ-...\")`, a requirement ID in the test name, or a requirement ID in the test docstring": [
+      {
+        "executionId": "d8324a8b-8d8f-4210-88ea-067f3bed7946",
+        "chatSessionId": "sess_5b6a87e3-6c4c-413c-8b47-5b44b0874552",
+        "timestamp": 1790341560738
+      },
+      {
+        "executionId": "d8324a8b-8d8f-4210-88ea-067f3bed7946",
+        "chatSessionId": "sess_5b6a87e3-6c4c-413c-8b47-5b44b0874552",
+        "timestamp": 1790341572848
+      },
+      {
+        "executionId": "d8324a8b-8d8f-4210-88ea-067f3bed7946",
+        "chatSessionId": "sess_5b6a87e3-6c4c-413c-8b47-5b44b0874552",
+        "timestamp": 1790341788187
+      }
+    ],
+    "8.2 Register the `req` marker in the event-service pytest configuration to prevent unknown-marker warnings": [
+      {
+        "executionId": "d8324a8b-8d8f-4210-88ea-067f3bed7946",
+        "chatSessionId": "sess_5b6a87e3-6c4c-413c-8b47-5b44b0874552",
+        "timestamp": 1790341560808
+      },
+      {
+        "executionId": "d8324a8b-8d8f-4210-88ea-067f3bed7946",
+        "chatSessionId": "sess_5b6a87e3-6c4c-413c-8b47-5b44b0874552",
+        "timestamp": 1790341799317
+      },
+      {
+        "executionId": "d8324a8b-8d8f-4210-88ea-067f3bed7946",
+        "chatSessionId": "sess_5b6a87e3-6c4c-413c-8b47-5b44b0874552",
+        "timestamp": 1790341920619
+      }
+    ],
+    "8.3 Run the event-service unit test suite and verify that all unit tests pass": [
+      {
+        "executionId": "d8324a8b-8d8f-4210-88ea-067f3bed7946",
+        "chatSessionId": "sess_5b6a87e3-6c4c-413c-8b47-5b44b0874552",
+        "timestamp": 1790341560858
+      },
+      {
+        "executionId": "d8324a8b-8d8f-4210-88ea-067f3bed7946",
+        "chatSessionId": "sess_5b6a87e3-6c4c-413c-8b47-5b44b0874552",
+        "timestamp": 1790341927260
+      },
+      {
+        "executionId": "d8324a8b-8d8f-4210-88ea-067f3bed7946",
+        "chatSessionId": "sess_5b6a87e3-6c4c-413c-8b47-5b44b0874552",
+        "timestamp": 1790341995727
+      }
+    ],
+    "8.4 Run the event-service integration test suite and verify that all integration tests pass": [
+      {
+        "executionId": "d8324a8b-8d8f-4210-88ea-067f3bed7946",
+        "chatSessionId": "sess_5b6a87e3-6c4c-413c-8b47-5b44b0874552",
+        "timestamp": 1790341560901
+      },
+      {
+        "executionId": "d8324a8b-8d8f-4210-88ea-067f3bed7946",
+        "chatSessionId": "sess_5b6a87e3-6c4c-413c-8b47-5b44b0874552",
+        "timestamp": 1790342001802
+      },
+      {
+        "executionId": "d8324a8b-8d8f-4210-88ea-067f3bed7946",
+        "chatSessionId": "sess_5b6a87e3-6c4c-413c-8b47-5b44b0874552",
+        "timestamp": 1790342352366
+      }
+    ],
+    "8.5 Measure event-service coverage and verify that application coverage is at least 80%": [
+      {
+        "executionId": "d8324a8b-8d8f-4210-88ea-067f3bed7946",
+        "chatSessionId": "sess_5b6a87e3-6c4c-413c-8b47-5b44b0874552",
+        "timestamp": 1790341560947
+      }
+    ]
+  }
+}

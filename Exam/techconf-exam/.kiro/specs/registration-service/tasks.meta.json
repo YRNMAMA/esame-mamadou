@@ -1,0 +1,122 @@
+{
+  "pbtResults": {},
+  "executionHistory": {
+    "8.1 Add requirement traceability to every registration-service unit and integration test using `@pytest.mark.req(\"REQ-...\")`, a requirement ID in the test name, or a requirement ID in the test docstring": [
+      {
+        "executionId": "d8324a8b-8d8f-4210-88ea-067f3bed7946",
+        "chatSessionId": "sess_5b6a87e3-6c4c-413c-8b47-5b44b0874552",
+        "timestamp": 1790341560738
+      },
+      {
+        "executionId": "d8324a8b-8d8f-4210-88ea-067f3bed7946",
+        "chatSessionId": "sess_5b6a87e3-6c4c-413c-8b47-5b44b0874552",
+        "timestamp": 1790341572953
+      },
+      {
+        "executionId": "d8324a8b-8d8f-4210-88ea-067f3bed7946",
+        "chatSessionId": "sess_5b6a87e3-6c4c-413c-8b47-5b44b0874552",
+        "timestamp": 1790341788279
+      }
+    ],
+    "8.2 Register the `req` marker in the registration-service pytest configuration to prevent unknown-marker warnings": [
+      {
+        "executionId": "d8324a8b-8d8f-4210-88ea-067f3bed7946",
+        "chatSessionId": "sess_5b6a87e3-6c4c-413c-8b47-5b44b0874552",
+        "timestamp": 1790341560806
+      },
+      {
+        "executionId": "d8324a8b-8d8f-4210-88ea-067f3bed7946",
+        "chatSessionId": "sess_5b6a87e3-6c4c-413c-8b47-5b44b0874552",
+        "timestamp": 1790341799386
+      },
+      {
+        "executionId": "d8324a8b-8d8f-4210-88ea-067f3bed7946",
+        "chatSessionId": "sess_5b6a87e3-6c4c-413c-8b47-5b44b0874552",
+        "timestamp": 1790341920577
+      }
+    ],
+    "8.3 Run the registration-service unit test suite and verify that all unit tests pass": [
+      {
+        "executionId": "d8324a8b-8d8f-4210-88ea-067f3bed7946",
+        "chatSessionId": "sess_5b6a87e3-6c4c-413c-8b47-5b44b0874552",
+        "timestamp": 1790341560843
+      },
+      {
+        "executionId": "d8324a8b-8d8f-4210-88ea-067f3bed7946",
+        "chatSessionId": "sess_5b6a87e3-6c4c-413c-8b47-5b44b0874552",
+        "timestamp": 1790341927336
+      },
+      {
+        "executionId": "d8324a8b-8d8f-4210-88ea-067f3bed7946",
+        "chatSessionId": "sess_5b6a87e3-6c4c-413c-8b47-5b44b0874552",
+        "timestamp": 1790341995864
+      }
+    ],
+    "8.4 Run the registration-service integration test suite and verify that all integration tests pass": [
+      {
+        "executionId": "d8324a8b-8d8f-4210-88ea-067f3bed7946",
+        "chatSessionId": "sess_5b6a87e3-6c4c-413c-8b47-5b44b0874552",
+        "timestamp": 1790341560885
+      },
+      {
+        "executionId": "d8324a8b-8d8f-4210-88ea-067f3bed7946",
+        "chatSessionId": "sess_5b6a87e3-6c4c-413c-8b47-5b44b0874552",
+        "timestamp": 1790342001803
+      },
+      {
+        "executionId": "d8324a8b-8d8f-4210-88ea-067f3bed7946",
+        "chatSessionId": "sess_5b6a87e3-6c4c-413c-8b47-5b44b0874552",
+        "timestamp": 1790342352377
+      }
+    ],
+    "8.5 Measure registration-service coverage and verify that application coverage is at least 80%": [
+      {
+        "executionId": "d8324a8b-8d8f-4210-88ea-067f3bed7946",
+        "chatSessionId": "sess_5b6a87e3-6c4c-413c-8b47-5b44b0874552",
+        "timestamp": 1790341560930
+      }
+    ],
+    "9.1 Inspect `BUGS.md` and identify every placeholder for issue references, regression tests, and commit hashes": [
+      {
+        "executionId": "d8324a8b-8d8f-4210-88ea-067f3bed7946",
+        "chatSessionId": "sess_5b6a87e3-6c4c-413c-8b47-5b44b0874552",
+        "timestamp": 1790341560968
+      }
+    ],
+    "9.2 Check `gh auth status`; only when GitHub CLI authentication is active, use `gh` to create or close the required real issues": [
+      {
+        "executionId": "d8324a8b-8d8f-4210-88ea-067f3bed7946",
+        "chatSessionId": "sess_5b6a87e3-6c4c-413c-8b47-5b44b0874552",
+        "timestamp": 1790341560989
+      }
+    ],
+    "9.3 Record real GitHub issue references in `BUGS.md` without inventing issue numbers when GitHub CLI authentication is unavailable": [
+      {
+        "executionId": "d8324a8b-8d8f-4210-88ea-067f3bed7946",
+        "chatSessionId": "sess_5b6a87e3-6c4c-413c-8b47-5b44b0874552",
+        "timestamp": 1790341561011
+      }
+    ],
+    "9.4 Record the real regression test name for each documented bug after verifying that the named test exists": [
+      {
+        "executionId": "d8324a8b-8d8f-4210-88ea-067f3bed7946",
+        "chatSessionId": "sess_5b6a87e3-6c4c-413c-8b47-5b44b0874552",
+        "timestamp": 1790341561031
+      }
+    ],
+    "9.5 Record the real commit hash for each documented fix after verifying that the commit exists in Git history": [
+      {
+        "executionId": "d8324a8b-8d8f-4210-88ea-067f3bed7946",
+        "chatSessionId": "sess_5b6a87e3-6c4c-413c-8b47-5b44b0874552",
+        "timestamp": 1790341561054
+      }
+    ],
+    "9.6 Verify that `BUGS.md` documents at least two closed bugs and that at least one is classified as an implementation bug, as required by Exam.MD §6.5": [
+      {
+        "executionId": "d8324a8b-8d8f-4210-88ea-067f3bed7946",
+        "chatSessionId": "sess_5b6a87e3-6c4c-413c-8b47-5b44b0874552",
+        "timestamp": 1790341561080
+      }
+    ]
+  }
+}
