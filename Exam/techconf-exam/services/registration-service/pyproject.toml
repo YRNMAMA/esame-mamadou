@@ -32,6 +32,9 @@ python_files = ["test_*.py"]
 python_classes = ["Test*"]
 python_functions = ["test_*"]
 addopts = "-v --tb=short"
+markers = [
+    "req(requirement_id): trace test to requirement",
+]
 
 [tool.coverage.run]
 source = ["registration_service"]
