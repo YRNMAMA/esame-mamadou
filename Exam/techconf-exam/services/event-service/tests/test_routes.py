@@ -236,3 +236,39 @@ class TestRoutes:
     def test_method_not_allowed(self, client):
         response = client.post("/api/v1/events/123")
         assert response.status_code == 405
+
+
+# Explicit one-to-one traceability keeps every route test tied to the business
+# requirement exercised by its primary assertion.
+_REQUIREMENT_TRACEABILITY = {
+    "test_health_endpoint": "REQ-EVT-B05",
+    "test_create_event_success": "REQ-EVT-B01",
+    "test_create_event_missing_required": "REQ-EVT-B03",
+    "test_create_event_invalid_dates": "REQ-EVT-B03",
+    "test_create_event_organizer_not_found": "REQ-EVT-B01",
+    "test_create_event_invalid_organizer_role": "REQ-EVT-B02",
+    "test_create_event_dependency_unavailable": "REQ-EVT-B05",
+    "test_list_events": "REQ-EVT-B06",
+    "test_list_events_status_filter": "REQ-EVT-B06",
+    "test_list_events_city_filter": "REQ-EVT-B06",
+    "test_get_event_success": "REQ-EVT-B01",
+    "test_get_event_not_found": "REQ-EVT-B01",
+    "test_put_event_success": "REQ-EVT-B03",
+    "test_put_event_not_found": "REQ-EVT-B03",
+    "test_put_event_organizer_not_found": "REQ-EVT-B01",
+    "test_patch_event_success": "REQ-EVT-B04",
+    "test_patch_event_invalid_transition": "REQ-EVT-B04",
+    "test_patch_event_not_found": "REQ-EVT-B04",
+    "test_patch_event_invalid_dates": "REQ-EVT-B03",
+    "test_delete_event_success": "REQ-EVT-B04",
+    "test_delete_event_not_found": "REQ-EVT-B04",
+    "test_malformed_json": "REQ-EVT-B03",
+    "test_method_not_allowed": "REQ-EVT-B04",
+}
+
+for _test_name, _requirement_id in _REQUIREMENT_TRACEABILITY.items():
+    setattr(
+        TestRoutes,
+        _test_name,
+        pytest.mark.req(_requirement_id)(getattr(TestRoutes, _test_name)),
+    )

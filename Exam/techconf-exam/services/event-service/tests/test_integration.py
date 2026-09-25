@@ -207,3 +207,15 @@ def test_event_dependency_unavailable():
     finally:
         proc.terminate()
         proc.wait()
+
+
+# Integration scenarios map directly to the organizer and dependency requirements.
+_REQUIREMENT_TRACEABILITY = {
+    "test_create_event_valid_organizer": "REQ-EVT-B01",
+    "test_create_event_organizer_not_found": "REQ-EVT-B01",
+    "test_create_event_user_not_organizer": "REQ-EVT-B02",
+    "test_event_dependency_unavailable": "REQ-EVT-B05",
+}
+
+for _test_name, _requirement_id in _REQUIREMENT_TRACEABILITY.items():
+    globals()[_test_name] = pytest.mark.req(_requirement_id)(globals()[_test_name])

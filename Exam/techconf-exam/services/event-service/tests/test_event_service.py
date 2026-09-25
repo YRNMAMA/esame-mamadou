@@ -700,3 +700,98 @@ class TestSqliteRepositoryExtended:
         result = repo.list_users(page=2, page_size=2)
         assert len(result["items"]) == 2
         assert result["total"] == 4
+
+
+# Every test has exactly one requirement marker. Keeping the mapping explicit makes
+# traceability reviewable without coupling unrelated tests to a class-level marker.
+_REQUIREMENT_TRACEABILITY = {
+    TestValidation: {
+        "test_valid_event_create": "REQ-EVT-B03",
+        "test_missing_title": "REQ-EVT-B03",
+        "test_title_too_short": "REQ-EVT-B03",
+        "test_title_too_long": "REQ-EVT-B03",
+        "test_missing_organizer": "REQ-EVT-B01",
+        "test_invalid_dates": "REQ-EVT-B03",
+        "test_end_before_start": "REQ-EVT-B03",
+        "test_invalid_capacity": "REQ-EVT-B03",
+        "test_negative_price": "REQ-EVT-B03",
+        "test_invalid_status": "REQ-EVT-B04",
+        "test_valid_statuses": "REQ-EVT-B04",
+        "test_validate_event_update": "REQ-EVT-B03",
+        "test_update_invalid_dates": "REQ-EVT-B03",
+        "test_validate_status_transition": "REQ-EVT-B04",
+    },
+    TestMemoryRepository: {
+        "test_create_and_get": "REQ-EVT-B04",
+        "test_list_events_pagination": "REQ-EVT-B06",
+        "test_list_events_status_filter": "REQ-EVT-B06",
+        "test_list_events_city_filter": "REQ-EVT-B06",
+        "test_update_event": "REQ-EVT-B04",
+        "test_update_nonexistent": "REQ-EVT-B04",
+        "test_delete_event": "REQ-EVT-B04",
+    },
+    TestJsonRepository: {
+        "test_create_and_get": "REQ-EVT-B04",
+        "test_persistence_across_instances": "REQ-EVT-B04",
+    },
+    TestSqliteRepository: {
+        "test_create_and_get": "REQ-EVT-B04",
+        "test_persistence_across_instances": "REQ-EVT-B04",
+    },
+    TestBusinessLogic: {
+        "test_create_event_success": "REQ-EVT-B01",
+        "test_create_event_organizer_not_found": "REQ-EVT-B01",
+        "test_create_event_invalid_organizer_role": "REQ-EVT-B02",
+        "test_create_event_dependency_unavailable": "REQ-EVT-B05",
+        "test_update_event_status_transition": "REQ-EVT-B04",
+        "test_update_event_organizer_change": "REQ-EVT-B01",
+        "test_update_event_invalid_organizer": "REQ-EVT-B02",
+    },
+    TestConfig: {
+        "test_default_config": "REQ-EVT-B05",
+        "test_custom_config": "REQ-EVT-B05",
+        "test_invalid_storage_backend": "REQ-EVT-B06",
+        "test_create_repository_factory": "REQ-EVT-B06",
+    },
+    TestClient: {
+        "test_client_creation": "REQ-EVT-B01",
+        "test_get_user_success": "REQ-EVT-B01",
+        "test_get_user_not_found": "REQ-EVT-B01",
+        "test_get_user_unavailable": "REQ-EVT-B05",
+        "test_get_user_timeout": "REQ-EVT-B05",
+    },
+    TestContractValidation: {
+        "test_event_schema": "REQ-EVT-B04",
+        "test_event_page_schema": "REQ-EVT-B06",
+    },
+    TestJsonRepositoryExtended: {
+        "test_list_events_pagination": "REQ-EVT-B06",
+        "test_list_events_status_filter": "REQ-EVT-B06",
+        "test_list_events_city_filter": "REQ-EVT-B06",
+        "test_update_event": "REQ-EVT-B04",
+        "test_update_nonexistent": "REQ-EVT-B04",
+        "test_update_all_fields": "REQ-EVT-B03",
+        "test_delete_event": "REQ-EVT-B04",
+        "test_list_empty": "REQ-EVT-B06",
+        "test_list_second_page": "REQ-EVT-B06",
+    },
+    TestSqliteRepositoryExtended: {
+        "test_list_events_pagination": "REQ-EVT-B06",
+        "test_list_events_status_filter": "REQ-EVT-B06",
+        "test_list_events_city_filter": "REQ-EVT-B06",
+        "test_update_event": "REQ-EVT-B04",
+        "test_update_nonexistent": "REQ-EVT-B04",
+        "test_update_all_fields": "REQ-EVT-B03",
+        "test_delete_event": "REQ-EVT-B04",
+        "test_list_empty": "REQ-EVT-B06",
+        "test_list_second_page": "REQ-EVT-B06",
+    },
+}
+
+for _test_class, _test_requirements in _REQUIREMENT_TRACEABILITY.items():
+    for _test_name, _requirement_id in _test_requirements.items():
+        setattr(
+            _test_class,
+            _test_name,
+            pytest.mark.req(_requirement_id)(getattr(_test_class, _test_name)),
+        )
